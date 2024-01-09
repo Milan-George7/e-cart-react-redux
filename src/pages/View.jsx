@@ -3,6 +3,8 @@ import { Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { addToWishlist } from '../Redux/Slices/wishlistSlice'
+import { addtoCart } from '../Redux/Slices/cartSlice'
+import Header from '../Components/Header'
 
 
 function View() {
@@ -31,29 +33,32 @@ function View() {
     }}
   
   return (
-    <div className='mt-5 container'>
-     { 
-        loading?  <div className='d-flex justify-content-center mt-5'><Spinner animation="border" variant="danger" />Loading...</div>: 
-       <div className="row mt-5 align-items-center">
-        <div className="col-md-4">
-          <img className='rounded shadow' style={{height:'400px',width:'100%'}} src={product?.thumbnail} alt="product" />
-        </div>
-        <div className="col-md-2"></div>
-        <div className="col-md-6">
-          <p>PID: {product?.id}</p>
-          <h1>{product?.title}</h1>
-          <h5 className='fw-bolder'>${product?.price}</h5>
-          <p style={{textAlign:'justify'}}><span className='fw-bolder'>Description :</span>{product?.description}</p>
-          <div className="d-flex justify-content-between mt-4">
-          <button onClick={()=>handleWishlist(product)} className="btn btn-light btn-outline-dark fs-5"><i className='fa-solid fa-heart text-danger'></i>Wishlist</button>
-          <button className="btn btn-light btn-outline-dark fs-5"><i className='fa-solid fa-cart-plus text-success'></i>Cart</button>
+   <>
+   <Header/>
+      <div className='mt-5 container'>
+       { 
+          loading?  <div className='d-flex justify-content-center mt-5'><Spinner animation="border" variant="danger" />Loading...</div>: 
+         <div className="row mt-5 align-items-center">
+          <div className="col-md-4">
+            <img className='rounded shadow' style={{height:'400px',width:'100%'}} src={product?.thumbnail} alt="product" />
           </div>
-
+          <div className="col-md-2"></div>
+          <div className="col-md-6">
+            <p>PID: {product?.id}</p>
+            <h1>{product?.title}</h1>
+            <h5 className='fw-bolder'>${product?.price}</h5>
+            <p style={{textAlign:'justify'}}><span className='fw-bolder'>Description :</span>{product?.description}</p>
+            <div className="d-flex justify-content-between mt-4">
+            <button onClick={()=>handleWishlist(product)} className="btn btn-light btn-outline-dark fs-5"><i className='fa-solid fa-heart text-danger'></i>Wishlist</button>
+            <button onClick={()=>dispatch(addtoCart(product))} className="btn btn-light btn-outline-dark fs-5"><i className='fa-solid fa-cart-plus text-success'></i>Cart</button>
+            </div>
+  
+          </div>
         </div>
+        
+        }
       </div>
-      
-      }
-    </div>
+   </>
   )
 }
 
